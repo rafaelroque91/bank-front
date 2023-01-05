@@ -1,24 +1,27 @@
-# frontend
+# BNB Bank System - Front-End
 
-## Project setup
+Bank System Front-end created using Vue.js
+
+### ⚙️ Project setup
+
+Edit the .env file to set
+- 	API URL,
+- 	Client ID
+- 	Client Token
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Run in develop mode
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build to production
+
 ```
 npm run build
-```
 
-### Lints and fixes files
 ```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
