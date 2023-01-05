@@ -4,7 +4,7 @@ Bank System Front-end created using Vue.js
 
 ### ⚙️ Project setup
 
-Edit the .env file to set
+Create.env file to setup. (read the env.exemple file)
 - 	API URL,
 - 	Client ID
 - 	Client Token
