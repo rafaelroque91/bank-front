@@ -27,6 +27,7 @@
         font-size: 30px;
         text-align: center;
         color: white;
+        margin-right: 30px;
     }
 
     button:hover {        

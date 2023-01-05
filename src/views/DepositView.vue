@@ -144,10 +144,6 @@
   label {
     color: #2c9cf9;
   }
-  .btn-row {
-    margin-top: 100px;    
-  }
-
   .btn-row button {
     height: 50px;
     font-size: 12px;

@@ -6,7 +6,7 @@
           <ul v-if="errors">
             <li v-for="e in errors" :key=e>{{e}}</li>            
           </ul>        
-          <button type="button" class="btn-close" aria-label="Close" @click="cleanMesage()"></button>
+          <button type="button" class="btn-close" aria-label="Close" @click="clearMessage()"></button>
       </div>      
     </div>
   </template>
@@ -20,10 +20,7 @@
       props: {       
        redirectRoute : String,
        response : Object
-      },         
-      components: {            
-        
-      },
+      },            
       data() {
         return {          
           status : '',   
@@ -33,7 +30,7 @@
         }
       },          
       methods: {
-        parseResponse(){          
+        parseResponse(){    
           let response = this.response.response ? this.response.response : this.response;                
           if (response) {               
             this.status = response.status;
@@ -41,34 +38,43 @@
             this.errors = '';
             if (this.data.errors){
               this.errors = this.data.errors;            
-            }          
-            this.message = this.data.message;
-          }    
-          if (this.message && this.success) {
-            setTimeout(() => {
-              this.cleanMessage();
-              this.redirect();
-            }, "3000");  
-          }
+            }        
+
+            if (this.redirectRoute) { 
+              this.message = this.data.message + '. Redirecting...';      
+            } else {
+              this.message = this.data.message;    
+            }
+                           
+            if (this.success) {          
+              setTimeout(() => {
+                this.redirect();              
+              }, 2000);
+            }
+          }           
         },
         redirect(){          
           if (this.redirectRoute) {                      
               this.$router.push("/"+this.redirectRoute);    
           }
-        },
-        cleanMessage(){          
+        },            
+        clearMessage(){        
           this.message = '';          
         }
-      },     
+      },    
+      watch: {
+        response(value){
+          this.parseResponse(value);          
+        },    
+      },
       computed: {
-        success(){            
-          this.parseResponse();     
-          if (this.status == 200 || this.status == 201) {
-            this.redirect();
+        success() {
+          if (this.status == 200 || this.status == 201) {            
             return true;
-          }          
-         return false; 
-        }        
+          } else {         
+            return false; 
+          }
+        }
       }
     }
   </script>
