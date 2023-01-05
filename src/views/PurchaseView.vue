@@ -1,14 +1,14 @@
 <template>    
   <div>    
     <SystemMenu title='Purchase' />  
-    <CurrentBalance :balance="currentBalance" />      
+    <CurrentBalance :balance="currentBalance" />          
     <div class="container-fluid">         
       <MessageShow :response="response" redirectRoute="expenses"/>
       <div class="row">
         <div class="lbl-form fw-bold">
           <label for="amount"> <font-awesome-icon class="icon" icon="fa-solid fa-money-check-dollar"/> Amount</label>        
         </div>
-        <div class="input-group mb-3">                    
+        <div class="input-group">                    
           <input v-model="amount" type="text" id="amount" class="form-control" aria-label="Amount" 
           v-maska data-maska="999#,##" data-maska-tokens="9:[0-9]:repeated" data-maska-reversed>
           <span class="input-group-text">USD</span>
@@ -44,19 +44,19 @@
   import SystemMenu from '@/components/SystemMenu.vue';
   import TransactionService from "@/services/transaction.service.js";
   import CurrentBalance from "@/components/CurrentBalance.vue";
-  import MessageShow from "@/components/MessageShow.vue";
+  import MessageShow from "@/components/MessageShow.vue";  
   
   export default {
     name: 'PurchaseView',
-    components: {            
-        SystemMenu,
-        CurrentBalance,
-        MessageShow  
-    },  
+    components: {
+    SystemMenu,
+    CurrentBalance,
+    MessageShow
+},  
     data(){
       return {
         description : '',
-        amount : 0,
+        amount : '',
         due_date : null,
         response : ''
       }
@@ -68,18 +68,31 @@
           this.currentBalance = this.$store.state.transaction.currentBalance;          
         }
       },
-      async Purchase() { 
+      async Purchase() {         
+        let loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });           
         const data = {
           description: this.description,
           amount: this.amount.replace(",", "."),
           due_date : this.due_date
         }     
         TransactionService.purchase(data).then((r) => { 
-          this.response = r;          
+          this.response = r;    
+          this.clearData();
         }).catch((r) => {    
-          this.response = r;             
-        });    
-      },      
+          this.response = r;                       
+        }).finally(() => {  
+          loader.hide();
+        })  
+      },   
+      clearData(){
+        this.description = '';
+        this.amount = '';        
+        this.due_date = '';               
+      }   
     },
     mounted() {
       this.getCurrentBalance();

@@ -8,33 +8,35 @@
           </div>
           <div class="card-body p-4 p-sm-5 rounded-4">   
             <MessageShow :response="response"/>    
-            <div class="row">
-              <div class="lbl-form fw-bold">
-                <label for="username">E-mail</label>        
+            <form @submit.prevent="Login()">
+              <div class="row">
+                <div class="lbl-form fw-bold">
+                  <label for="username">E-mail</label>        
+                </div>
+                <div class="form-group">          
+                  <input v-model="username" type="email" class="form-control" id="username">
+                </div>
               </div>
-              <div class="form-group">          
-                <input v-model="username" type="email" class="form-control" id="username">
+              <div class="row">
+                <div class="lbl-form fw-bold">
+                  <label for="password">Password</label>        
+                </div>
+                <div class="form-group">          
+                  <input v-model="password" type="password" class="form-control" id="password">
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="lbl-form fw-bold">
-                <label for="password">Password</label>        
-              </div>
-              <div class="form-group">          
-                <input v-model="password" type="password" class="form-control" id="password">
-              </div>
-            </div>
-            <div class="row">                       
-              <button class="btn btn-primary btn-login text-uppercase fw-bold" @click="Login()">Sign in</button>
-            </div>  
-            <div class="row justify-content-center div-hr">
-              <hr />            
-              <router-link class="text-white" to="/register">   
-                <div class="row justify-content-center">
-                <button class="btn btn-link">Don't have an account? register</button>
-              </div>
-              </router-link>                             
-            </div>            
+              <div class="row">                       
+                <input type="submit" class="btn btn-primary btn-login text-uppercase fw-bold" value="Sign in" />
+              </div>  
+              <div class="row justify-content-center div-hr">
+                <hr />            
+                <router-link class="text-white" to="/register">   
+                  <div class="row justify-content-center">
+                  <button class="btn btn-link">Don't have an account? register</button>
+                </div>
+                </router-link>                             
+              </div>    
+            </form>        
           </div>          
         </div>
       </div>
@@ -53,7 +55,8 @@
       return {
         username : '',
         password : '',
-        response : ''
+        response : '',
+        loader : null
       }
     },
     mounted(){    
@@ -61,15 +64,22 @@
       this.$store.dispatch("setAccessToken", token);    
     },
     methods: {
-      async Login() {    
+      async Login() {  
+        this.loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });  
+
         const data = {
           username: this.username,
           password: this.password
         }    
         await this.$store.dispatch("login", data); 
-        if (this.$store.state.login.access_token) {        
+        if (this.$store.state.login.access_token) {                                 
           this.redirectHomepage();
         } else {
+          this.loader.hide();  
           this.response = this.$store.state.login.response                                
         }
       },
@@ -80,6 +90,7 @@
         } else {
           this.$router.push("/");
         }         
+        this.loader.hide();    
       }
     } 
   }
@@ -109,6 +120,10 @@
   }
 
   h3 {
+    color: white;
+  }
+
+  .btn-login{
     color: white;
   }
 

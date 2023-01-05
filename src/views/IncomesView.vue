@@ -1,5 +1,5 @@
 <template>    
-  <div>
+  <div class="">
     <SystemMenu title="Incomes"/>
     <MessageShow :response="response" redirectRoute=""/> 
     <div id="div-home" class="row">       
@@ -118,5 +118,8 @@
     margin-top:30px;
     min-height: 300px;
   }     
+  .view {
+    overflow:auto;
+  }
 </style>
   

@@ -1,5 +1,5 @@
 <template>    
-  <div>    
+  <div class="view">    
     <SystemMenu title='Check Deposit'/>  
     <CurrentBalance :balance="currentBalance" />          
     <div class="container-fluid"> 
@@ -60,7 +60,7 @@
     data(){
       return {
         description : '',
-        amount : 0,
+        amount : '',
         image : null,
         imagesrc : '',
         response : ''
@@ -73,21 +73,35 @@
           this.currentBalance = this.$store.state.transaction.currentBalance;          
         }
       },
-      async Deposit() {         
+      async Deposit() {   
+        let loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });   
+
         let data = new FormData();        
         data.append("description", this.description);
         data.append("check", this.image);
         data.append("amount",this.amount.replace(",", "."))        
 
         TransactionService.depositCheck(data).then((r) => {          
-          this.response = r;     
+          this.response = r; 
+          this.clearData();         
         }).catch((r) => {                  
           this.response = r;            
-        });               
-      },
+        }).finally(() => {  
+          loader.hide();
+        })               
+      },     
       triggerFileUpload(){
         const input = document.getElementById('imageFile');
         input.click();
+      },
+      clearData(){
+        this.description = '';
+        this.amount = '';        
+        this.imagesrc = '';              
       },
       readURL(input) {
         input = document.getElementById('imageFile');
@@ -198,6 +212,10 @@
 
   span, input:hover {
     color: #2c9cf9;
+  }
+
+  .view {
+    overflow:scroll;
   }
 </style>
   

@@ -1,5 +1,5 @@
 <template>    
-  <div>
+  <div class="view">    
     <SystemMenu title="BNB Bank"/>
     <div id="div-home" class="row">
       <MessageShow :response="response" redirectRoute=""/> 
@@ -47,7 +47,7 @@
     data() {
       return {
         dateFilter : null,
-        response : ''        
+        response : ''       
       }
     },
     components: {            
@@ -65,7 +65,7 @@
           this.transactions = this.$store.state.transaction.transactions;          
         } else {
           this.response = this.$store.state.transaction.response;          
-        }
+        }        
       }, 
       getCurrentMonth(){
         this.dateFilter = this.currentMonth();
@@ -74,10 +74,10 @@
         await this.$store.dispatch("getMonths");              
       },
     },
-    mounted() {
+    mounted() {              
       this.getMonths();
       this.getCurrentMonth();
-      this.getTransactions();            
+      this.getTransactions();           
     },
     computed: {
       transactions() {        
@@ -147,8 +147,10 @@
   select option {
     background: #86bdf0 !important;
     font-size: 15px;
-    color: #fff;
-   
+    color: #fff;   
   }  
+  .view {
+    overflow:auto;
+  }
 </style>
   

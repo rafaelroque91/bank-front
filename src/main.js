@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 
 import App from './App.vue'
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -18,4 +20,5 @@ library.add(faScaleUnbalancedFlip,faArrowTurnDown,faArrowTurnUp, faMoneyCheckDol
     faStar,faCloudArrowUp, faCalendarDays, faUser, faEnvelope, faFile, faCircleXmark, faCircleCheck);
 
 myApp.component('font-awesome-icon', FontAwesomeIcon)
+myApp.use(LoadingPlugin);
 myApp.mount('#app')

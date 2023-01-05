@@ -1,5 +1,5 @@
 <template>    
-  <div>    
+  <div class="view">    
     <SystemMenu title='Check Details'/>    
     <div class="container-fluid">        
       <MessageShow :response="response" redirectRoute="checkcontrol"/>    
@@ -81,18 +81,34 @@
         );      
       },
       async Accept(){  
+        let loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });   
+  
         TransactionService.aproveCheck(this.check.id).then((r) => {  
           this.response = r;     
         }).catch((r) => {                  
           this.response = r;                     
-        });       
+        }).finally(() => {  
+          loader.hide();
+        })       
       },
-      async Reject(){      
+      async Reject(){   
+        let loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });   
+        
         TransactionService.rejectCheck(this.check.id).then((r) => {                         
           this.response = r;     
         }).catch((r) => {                  
           this.response = r;                     
-        });    
+        }).finally(() => {  
+          loader.hide();
+        }) 
       }
     },
     computed: {      
@@ -159,6 +175,10 @@
     margin-left: 20px; 
     font-size: 25px;   
     font-weight: normal;   
+  }
+
+  .view {
+    overflow:scroll;
   }
 </style>
   

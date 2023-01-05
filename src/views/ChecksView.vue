@@ -1,5 +1,5 @@
 <template>    
-  <div>
+  <div class="view">    
     <SystemMenu title="Checks"/>
     <div id="div-home" class="row">       
       <div class="col d-flex justify-content-start" id="div-calendar" @change="getChecks">
@@ -179,6 +179,10 @@ span {
 
   .nav {
     margin-top: 30px;
+  }
+
+  .view {
+    overflow:scroll;
   }
 </style>
   

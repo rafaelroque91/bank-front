@@ -43,16 +43,20 @@
               this.errors = this.data.errors;            
             }          
             this.message = this.data.message;
-          }         
-        },
-        redirect(){          
-          if (this.redirectRoute) {            
+          }    
+          if (this.message && this.success) {
             setTimeout(() => {
-              this.$router.push("/"+this.redirectRoute); 
-            }, "2000")          
+              this.cleanMessage();
+              this.redirect();
+            }, "3000");  
           }
         },
-        cleanMesage(){          
+        redirect(){          
+          if (this.redirectRoute) {                      
+              this.$router.push("/"+this.redirectRoute);    
+          }
+        },
+        cleanMessage(){          
           this.message = '';          
         }
       },     

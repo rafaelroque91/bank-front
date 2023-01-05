@@ -1,49 +1,51 @@
 <template>
-  <div class="container">
-    <MessageShow :response="response" redirectRoute="login"/> 
+  <div class="container">   
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card rounded-4 my-5">
           <div class="card-header">
             <h3 class="card-title text-center mb-0">BNB Bank</h3>
           </div>
-          <div class="card-body p-4 p-sm-5 rounded-4">                       
-            <div class="row">
-              <div class="lbl-form fw-bold">
-                <label for="description">Username</label>        
-              </div>
-              <div class="form-group">          
-                <input v-model="username" type="text" class="form-control" id="description">
-              </div>
-            </div>
-            <div class="row">
-              <div class="lbl-form fw-bold">
-                <label for="description">E-mail</label>        
-              </div>
-              <div class="form-group">          
-                <input v-model="email" type="text" class="form-control" id="email">
-              </div>
-            </div>
-            <div class="row">
-              <div class="lbl-form fw-bold">
-                <label for="description">Password</label>        
-              </div>
-              <div class="form-group">          
-                <input v-model="password" type="password" class="form-control" id="description">
-              </div>
-            </div>
-            <div class="row">                       
-              <button class="btn btn-primary btn-login text-uppercase fw-bold" @click="Register">Sign Up</button>
-            </div>  
-            <div class="row justify-content-center div-hr">
-              <hr />            
-              <router-link class="text-white" to="/login">   
-                <div class="row justify-content-center">
-                  <button type="button" class="btn btn-link">Already have an account?</button>                                           
+          <MessageShow :response="response" redirectRoute="login"/>     
+          <form @submit.prevent="Register()">
+            <div class="card-body p-4 p-sm-5 rounded-4">                       
+              <div class="row">
+                <div class="lbl-form fw-bold">
+                  <label for="description">Username</label>        
                 </div>
-              </router-link>                             
+                <div class="form-group">          
+                  <input v-model="username" type="text" class="form-control" id="description">
+                </div>
+              </div>
+              <div class="row">
+                <div class="lbl-form fw-bold">
+                  <label for="description">E-mail</label>        
+                </div>
+                <div class="form-group">          
+                  <input v-model="email" type="text" class="form-control" id="email">
+                </div>
+              </div>
+              <div class="row">
+                <div class="lbl-form fw-bold">
+                  <label for="description">Password</label>        
+                </div>
+                <div class="form-group">          
+                  <input v-model="password" type="password" class="form-control" id="description">
+                </div>
+              </div>
+              <div class="row">    
+                <input type="submit" class="btn btn-primary btn-register text-uppercase fw-bold" value="Sign Up" />                                 
+              </div>  
+              <div class="row justify-content-center div-hr">
+                <hr />            
+                <router-link class="text-white" to="/login">   
+                  <div class="row justify-content-center">
+                    <button type="button" class="btn btn-link">Already have an account?</button>                                           
+                  </div>
+                </router-link>                             
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -70,6 +72,11 @@
     },
     methods: {
       async Register() {
+        this.loader = this.$loading.show({       
+          color: '#2c9cf9',
+          container: null ,
+          canCancel: false,                  
+        });  
         const data = {
           username: this.username,
           email : this.email,
@@ -80,7 +87,9 @@
           this.response = r;     
         }).catch((r) => {                  
           this.response = r;
-        });     
+        }).finally(() => {
+          this.loader.hide();  
+        });
       },     
     } 
   }
@@ -133,5 +142,9 @@
 
   span, input:hover {
     color: #2c9cf9;
+  }
+
+  .btn-register{
+    color: white;
   }
 </style>

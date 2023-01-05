@@ -1,5 +1,5 @@
 <template>    
-  <div>
+  <div class="view">    
     <SystemMenu title="Checks Control"/>        
     <div class="list-check">              
       <div class="check-item" v-for="c in checks" :key="c.id">
@@ -70,5 +70,9 @@
   .check-item {
     cursor: pointer;
   }   
+
+  .view {
+    overflow:scroll;
+  }
 </style>
   

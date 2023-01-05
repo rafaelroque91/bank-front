@@ -1,5 +1,5 @@
 <template>    
-  <div>
+  <div class="view">
     <SystemMenu title="Expenses"/>
     
     <MessageShow :response="response" redirectRoute=""/> 
@@ -152,8 +152,8 @@ span {
     margin-top:30px;
     min-height: 300px;
   }
-
- 
-    
+  .view {
+    overflow:scroll;
+  } 
 </style>
   
