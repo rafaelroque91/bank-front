@@ -178,7 +178,7 @@
   }
 
   .view {
-    overflow:scroll;
+    overflow:auto;
   }
 </style>
   

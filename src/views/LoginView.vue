@@ -148,4 +148,10 @@
   span, input:hover {
     color: #2c9cf9;
   }
+
+  .container {
+    margin-right: auto !important;
+  }
+
+  
 </style>

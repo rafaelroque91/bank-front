@@ -40,7 +40,7 @@
               this.errors = this.data.errors;            
             }        
 
-            if (this.redirectRoute) { 
+            if (this.redirectRoute && this.success) { 
               this.message = this.data.message + '. Redirecting...';      
             } else {
               this.message = this.data.message;    
@@ -69,11 +69,7 @@
       },
       computed: {
         success() {
-          if (this.status == 200 || this.status == 201) {            
-            return true;
-          } else {         
-            return false; 
-          }
+          return  (this.status === 200 || this.status === 201);
         }
       }
     }

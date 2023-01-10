@@ -1,5 +1,5 @@
 <template>    
-  <div class="">
+  <div class="view">    
     <SystemMenu title="Incomes"/>
     <MessageShow :response="response" redirectRoute=""/> 
     <div id="div-home" class="row">       
